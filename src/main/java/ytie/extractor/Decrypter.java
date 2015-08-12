@@ -2,9 +2,9 @@
 
 package ytie.extractor;
 
+import ytie.extractor.exceptions.ParseSignatureException;
 import ytie.extractor.exceptions.PlayerMatchException;
 import ytie.util.HTTPUtility;
-import ytie.extractor.exceptions.ParseSignatureException;
 
 import java.io.IOException;
 import java.util.ArrayList;
