@@ -1,7 +1,5 @@
 package ytie.extractor;
 
-import junit.framework.Assert;
-
 import org.junit.Test;
 
 import ytie.format.Format;
@@ -15,7 +13,7 @@ public class YoutubeVideoInfoRepositoryTest {
     @Test
     public void testMain() {
         YouTubeVideoInfoRepository extractorRepository = new YouTubeVideoInfoData();
-        extractorRepository.getInfoByID("YOiCkhIZyzs", new YouTubeVideoInfoRepository.YoutubeVideoInfoCallback() {
+        extractorRepository.getInfoById("YOiCkhIZyzs", new YouTubeVideoInfoRepository.YoutubeVideoInfoCallback() {
             @Override
             public void onSuccess(VideoInfoData info) {
                 System.out.printf("title: %s, view-count: %d, length: %d\n", info.getTitle(), info.getViewCount(), info.getLength());

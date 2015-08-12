@@ -34,18 +34,23 @@ public class YouTubeVideoInfoData implements YouTubeVideoInfoRepository {
 
     private Decrypter decrypter = new Decrypter();
 
-    public void getInfoByID(String videoId, YoutubeVideoInfoCallback callback) {
-        VideoInfoData info = new VideoInfoData();
-        String stringUrl = String.format("%s://www.youtube.com/watch?v=%s&gl=US&hl=en&has_verified=1&bpctr=9999999999", proto, videoId);
-        String videoWebpage = null;
+    @Override
+    public VideoInfoData getInfoByid( String videoId ) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void getInfoById(String videoId, YoutubeVideoInfoCallback callback) {
+        final VideoInfoData info = new VideoInfoData();
+        final String stringUrl = String.format("%s://www.youtube.com/watch?v=%s&gl=US&hl=en&has_verified=1&bpctr=9999999999", proto, videoId);
         String embededWebpage = null;
-        List<Format> formats;
-        Boolean ageGate = false;
-        Map<String, String> videoInfo = null;
+        final List<Format> formats;
+        final boolean ageGate;
+        final Map<String, String> videoInfo;
 
         try {
             info.setVideoID(videoId);
-            videoWebpage = HTTPUtility.downloadPageSource(stringUrl);
+            final String videoWebpage = HTTPUtility.downloadPageSource(stringUrl);
             if (ageRestrictPattern.matcher(videoWebpage).find()) {
                 ageGate = true;
                 videoInfo = getVideoInfoEmbed(videoId);
@@ -73,7 +78,7 @@ public class YouTubeVideoInfoData implements YouTubeVideoInfoRepository {
                 }
             }
 
-            formats = new ArrayList<Format>();
+            formats = new ArrayList<>();
             info.setAgeGate(ageGate);
 
             if (!videoInfo.containsKey("token") && videoInfo.containsKey("reason")) {
@@ -84,7 +89,7 @@ public class YouTubeVideoInfoData implements YouTubeVideoInfoRepository {
                 }
             }
 
-            info = populateDataWithVideoInfo(info, videoInfo);
+            populateDataWithVideoInfo(info, videoInfo);
 
             if (videoInfo.containsKey("conn") && videoInfo.get("conn").startsWith("rtmp")) {
                 formats.add(new FormatBuilder()
@@ -170,7 +175,7 @@ public class YouTubeVideoInfoData implements YouTubeVideoInfoRepository {
         return HTTPUtility.downloadPageSource(stringUrl);
     }
 
-    private static VideoInfoData populateDataWithVideoInfo(VideoInfoData info, Map<String, String> videoInfo) throws DataNotFoundException {
+    private static void populateDataWithVideoInfo(VideoInfoData info, Map<String, String> videoInfo) throws DataNotFoundException {
         if(!videoInfo.containsKey("view_count")) {
             info.setViewCount(0);
         }
@@ -198,8 +203,6 @@ public class YouTubeVideoInfoData implements YouTubeVideoInfoRepository {
         }
 
         info.setLength(Integer.parseInt(videoInfo.get("length_seconds")));
-
-        return info;
     }
 
     private static Map<String, String> getVideoInfoEmbed(String videoId) throws IOException {
