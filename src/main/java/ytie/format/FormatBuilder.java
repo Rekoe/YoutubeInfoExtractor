@@ -91,8 +91,8 @@ public class FormatBuilder {
         return this;
     }
 
-    public Format build() {
-        Format format = null;
+    public RawFormat build() {
+        RawFormat format = null;
         switch(this.formatId) {
             case 5:
                 return new StandardFormat(this.formatId, "flv", 400, 240, this.filesize, this.url);

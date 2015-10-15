@@ -3,7 +3,7 @@ package ytie.format;
 /**
  * Created by Jacob on 4/8/2015.
  */
-public class AppleLiveStreamingFormat extends Format {
+public class AppleLiveStreamingFormat extends RawFormat {
     private final int height;
     private final String formatNote = "HLS";
     private final int preference;

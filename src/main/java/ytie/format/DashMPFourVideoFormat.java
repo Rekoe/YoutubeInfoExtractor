@@ -3,7 +3,7 @@ package ytie.format;
 /**
  * Created by Jacob on 4/8/2015.
  */
-public class DashMPFourVideoFormat extends Format {
+public class DashMPFourVideoFormat extends RawFormat {
     private final String formatNote = "DASH video";
     private final String acodec;
     private final int preference;

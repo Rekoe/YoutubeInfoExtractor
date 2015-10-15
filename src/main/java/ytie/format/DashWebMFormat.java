@@ -3,7 +3,7 @@ package ytie.format;
 /**
  * Created by Jacob on 4/8/2015.
  */
-public class DashWebMFormat extends Format {
+public class DashWebMFormat extends RawFormat {
     private final int height;
     private final int preference;
     private final String formatNote = "DASH video";

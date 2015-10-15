@@ -3,7 +3,7 @@ package ytie.format;
 /**
  * Created by Jacob on 4/8/2015.
  */
-public class ThreeDVideoFormat extends Format {
+public class ThreeDVideoFormat extends RawFormat {
     private final int height;
     private final String formatNote = "3D";
     private final int preference;

@@ -3,7 +3,7 @@ package ytie.format;
 /**
  * Created by Jacob on 4/8/2015.
  */
-public class DashWebMAudioOpusFormat extends Format {
+public class DashWebMAudioOpusFormat extends RawFormat {
     private final String acodec;
     private final String formatNote = "DASH audio";
     private final int abr;

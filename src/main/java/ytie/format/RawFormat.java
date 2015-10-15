@@ -3,14 +3,14 @@ package ytie.format;
 /**
  * Created by Jacob on 4/8/2015.
  */
-public class Format {
+public class RawFormat {
     private final int formatId;
     private final String formatExt;
     private final FormatType formatType;
     private final int filesize;
     private final String url;
 
-    public Format(int id, String ext, int filesize, String url, FormatType type) {
+    public RawFormat(int id, String ext, int filesize, String url, FormatType type) {
         this.formatId = id;
         this.formatExt = ext;
         this.formatType = type;

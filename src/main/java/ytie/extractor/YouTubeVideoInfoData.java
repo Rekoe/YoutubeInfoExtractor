@@ -11,7 +11,7 @@ import com.google.gson.JsonParser;
 
 import ytie.extractor.exceptions.DataNotFoundException;
 import ytie.extractor.exceptions.PlayerNotFoundException;
-import ytie.format.Format;
+import ytie.format.RawFormat;
 import ytie.format.FormatBuilder;
 import ytie.util.HTTPUtility;
 
@@ -44,7 +44,7 @@ public class YouTubeVideoInfoData implements YouTubeVideoInfoRepository {
         final VideoInfoData info = new VideoInfoData();
         final String stringUrl = String.format("%s://www.youtube.com/watch?v=%s&gl=US&hl=en&has_verified=1&bpctr=9999999999", proto, videoId);
         String embededWebpage = null;
-        final List<Format> formats;
+        final List<RawFormat> formats;
         final boolean ageGate;
         final Map<String, String> videoInfo;
 

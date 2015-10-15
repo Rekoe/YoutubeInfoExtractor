@@ -3,7 +3,7 @@ package ytie.format;
 /**
  * Created by Jacob on 4/8/2015.
  */
-public class DashMPFourAudioFormat extends Format {
+public class DashMPFourAudioFormat extends RawFormat {
     private final String acodec;
     private final String vcodec;
     private final String formatNote = "DASH audio";

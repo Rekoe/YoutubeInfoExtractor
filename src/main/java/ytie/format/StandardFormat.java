@@ -3,7 +3,7 @@ package ytie.format;
 /**
  * Created by Jacob on 4/8/2015.
  */
-public class StandardFormat extends Format {
+public class StandardFormat extends RawFormat {
     private int width = 0;
     private int height = 0;
 

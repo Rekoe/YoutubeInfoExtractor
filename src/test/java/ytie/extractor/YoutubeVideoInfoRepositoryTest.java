@@ -2,7 +2,7 @@ package ytie.extractor;
 
 import org.junit.Test;
 
-import ytie.format.Format;
+import ytie.format.RawFormat;
 import ytie.format.FormatType;
 
 /**
@@ -17,7 +17,7 @@ public class YoutubeVideoInfoRepositoryTest {
             @Override
             public void onSuccess(VideoInfoData info) {
                 System.out.printf("title: %s, view-count: %d, length: %d\n", info.getTitle(), info.getViewCount(), info.getLength());
-                for (Format format : info.getFormats()) {
+                for (RawFormat format : info.getFormats()) {
                     if (format.getFormatType() != FormatType.UNKNOWN) {
                         System.out.println(format.toString());
                     }

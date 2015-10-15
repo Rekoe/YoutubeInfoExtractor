@@ -1,6 +1,6 @@
 package ytie.extractor;
 
-import ytie.format.Format;
+import ytie.format.RawFormat;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,7 @@ public class VideoInfoData {
     private int timestamp;
     private Map<String, String> thumbnails;
     private List<String> keywords;
-    private List<Format> formats;
+    private List<RawFormat> formats;
 
     public String getTitle() {
         return title;
@@ -110,11 +110,11 @@ public class VideoInfoData {
         this.keywords = keywords;
     }
 
-    public List<Format> getFormats() {
+    public List<RawFormat> getFormats() {
         return formats;
     }
 
-    public void setFormats(List<Format> formats) {
+    public void setFormats(List<RawFormat> formats) {
         this.formats = formats;
     }
 }
