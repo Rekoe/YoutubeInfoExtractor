@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Jacob on 4/7/2015.
  */
-public class VideoInfoData {
+public class RawVideoInfoData {
     private String title;
     private String videoId;
     private String author;

@@ -5,11 +5,11 @@ package ytie.extractor;
  */
 public interface YouTubeVideoInfoRepository {
     interface YoutubeVideoInfoCallback {
-        void onSuccess(VideoInfoData info);
+        void onSuccess(RawVideoInfoData info);
         void onError(Exception ex);
     }
 
     void getInfoById(final String id, YoutubeVideoInfoCallback callback);
 
-    public VideoInfoData getInfoByid( String videoId );
+    RawVideoInfoData getInfoById(String videoId);
 }

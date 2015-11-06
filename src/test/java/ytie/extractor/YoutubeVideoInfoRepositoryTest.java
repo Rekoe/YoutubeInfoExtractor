@@ -11,11 +11,11 @@ import ytie.format.FormatType;
 public class YoutubeVideoInfoRepositoryTest {
 
     @Test
-    public void testMain() {
+    public void testAsync() {
         YouTubeVideoInfoRepository extractorRepository = new YouTubeVideoInfoData();
         extractorRepository.getInfoById("YOiCkhIZyzs", new YouTubeVideoInfoRepository.YoutubeVideoInfoCallback() {
             @Override
-            public void onSuccess(VideoInfoData info) {
+            public void onSuccess(RawVideoInfoData info) {
                 System.out.printf("title: %s, view-count: %d, length: %d\n", info.getTitle(), info.getViewCount(), info.getLength());
                 for (RawFormat format : info.getFormats()) {
                     if (format.getFormatType() != FormatType.UNKNOWN) {
@@ -32,6 +32,17 @@ public class YoutubeVideoInfoRepositoryTest {
                 System.err.println(ex.toString());
             }
         });
+    }
+
+    @Test
+    public void testSync() {
+        YouTubeVideoInfoRepository extractorRepository = new YouTubeVideoInfoData();
+        final RawVideoInfoData rawVideoInfoData = extractorRepository.getInfoById("YOiCkhIZyzs");
+        for (RawFormat format : rawVideoInfoData.getFormats()) {
+            if (format.getFormatType() != FormatType.UNKNOWN) {
+                System.out.println(format.toString());
+            }
+        }
     }
 
 }

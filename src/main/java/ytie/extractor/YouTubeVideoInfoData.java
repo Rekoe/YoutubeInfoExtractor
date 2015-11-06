@@ -9,12 +9,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 
-import ytie.extractor.exceptions.DataNotFoundException;
-import ytie.extractor.exceptions.PlayerNotFoundException;
-import ytie.format.RawFormat;
-import ytie.format.FormatBuilder;
-import ytie.util.HTTPUtility;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +16,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import ytie.extractor.exceptions.DataNotFoundException;
+import ytie.extractor.exceptions.PlayerNotFoundException;
+import ytie.format.FormatBuilder;
+import ytie.format.RawFormat;
+import ytie.util.HTTPUtility;
 
 
 public class YouTubeVideoInfoData implements YouTubeVideoInfoRepository {
@@ -35,20 +35,15 @@ public class YouTubeVideoInfoData implements YouTubeVideoInfoRepository {
     private Decrypter decrypter = new Decrypter();
 
     @Override
-    public VideoInfoData getInfoByid( String videoId ) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void getInfoById(String videoId, YoutubeVideoInfoCallback callback) {
-        final VideoInfoData info = new VideoInfoData();
-        final String stringUrl = String.format("%s://www.youtube.com/watch?v=%s&gl=US&hl=en&has_verified=1&bpctr=9999999999", proto, videoId);
-        String embededWebpage = null;
-        final List<RawFormat> formats;
-        final boolean ageGate;
-        final Map<String, String> videoInfo;
-
+    public RawVideoInfoData getInfoById(String videoId) {
         try {
+            final RawVideoInfoData info = new RawVideoInfoData();
+            final String stringUrl = String.format("%s://www.youtube.com/watch?v=%s&gl=US&hl=en&has_verified=1&bpctr=9999999999", proto, videoId);
+            String embededWebpage = null;
+            final List<RawFormat> formats;
+            final boolean ageGate;
+            final Map<String, String> videoInfo;
+
             info.setVideoID(videoId);
             final String videoWebpage = HTTPUtility.downloadPageSource(stringUrl);
             if (ageRestrictPattern.matcher(videoWebpage).find()) {
@@ -164,8 +159,18 @@ public class YouTubeVideoInfoData implements YouTubeVideoInfoRepository {
                 }
             }
             info.setFormats(formats);
-            callback.onSuccess(info);
-        } catch(Exception ex) {
+            return info;
+        } catch (Exception e ) {
+            return null;
+        }
+    }
+
+    @Override
+    public void getInfoById(String videoId, YoutubeVideoInfoCallback callback) {
+        try {
+            final RawVideoInfoData rawVideoInfoData = getInfoById(videoId);
+            callback.onSuccess(rawVideoInfoData);
+        } catch (Exception ex) {
             callback.onError(ex);
         }
     }
@@ -175,30 +180,30 @@ public class YouTubeVideoInfoData implements YouTubeVideoInfoRepository {
         return HTTPUtility.downloadPageSource(stringUrl);
     }
 
-    private static void populateDataWithVideoInfo(VideoInfoData info, Map<String, String> videoInfo) throws DataNotFoundException {
-        if(!videoInfo.containsKey("view_count")) {
+    private static void populateDataWithVideoInfo(RawVideoInfoData info, Map<String, String> videoInfo) throws DataNotFoundException {
+        if (!videoInfo.containsKey("view_count")) {
             info.setViewCount(0);
         }
 
         info.setViewCount(Integer.parseInt(videoInfo.get("view_count")));
 
-        if(videoInfo.containsKey("ypc_video_rental_bar_text") && !videoInfo.containsKey("author")) {
+        if (videoInfo.containsKey("ypc_video_rental_bar_text") && !videoInfo.containsKey("author")) {
             throw new UnsupportedOperationException("Rental videos not supported");
         }
 
-        if(!videoInfo.containsKey("author")) {
+        if (!videoInfo.containsKey("author")) {
             throw new DataNotFoundException("Author not found in video info");
         }
 
         info.setAuthor(videoInfo.get("author"));
 
-        if(!videoInfo.containsKey("title")) {
+        if (!videoInfo.containsKey("title")) {
             throw new DataNotFoundException("Video title not found in video info");
         }
 
         info.setTitle(videoInfo.get("title"));
 
-        if(!videoInfo.containsKey("length_seconds")) {
+        if (!videoInfo.containsKey("length_seconds")) {
             info.setLength(0);
         }
 
