@@ -161,6 +161,7 @@ public class YouTubeVideoInfoData implements YouTubeVideoInfoRepository {
             info.setFormats(formats);
             return info;
         } catch (Exception e ) {
+            e.printStackTrace();
             return null;
         }
     }

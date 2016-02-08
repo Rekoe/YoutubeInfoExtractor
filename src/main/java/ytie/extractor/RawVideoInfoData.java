@@ -117,4 +117,22 @@ public class RawVideoInfoData {
     public void setFormats(List<RawFormat> formats) {
         this.formats = formats;
     }
+
+    @Override
+    public String toString() {
+        return "RawVideoInfoData{" +
+                "title='" + title + '\'' +
+                ", videoId='" + videoId + '\'' +
+                ", author='" + author + '\'' +
+                ", description='" + description + '\'' +
+                ", ageGate=" + ageGate +
+                ", length=" + length +
+                ", viewCount=" + viewCount +
+                ", loudness=" + loudness +
+                ", timestamp=" + timestamp +
+                ", thumbnails=" + thumbnails +
+                ", keywords=" + keywords +
+                ", formats=" + formats +
+                '}';
+    }
 }
